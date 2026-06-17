@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management - Admin - RentEase</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar for Desktop -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <a href="index.html" class="sidebar-logo">
+                    <div class="logo-icon">R</div>
+                    <span>RentEase</span>
+                </a>
+                <p class="sidebar-subtitle">Admin Panel</p>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="admin.html" class="nav-item">
+                    <ion-icon name="grid-outline"></ion-icon>
+                    Dashboard
+                </a>
+                <a href="admin-products.html" class="nav-item">
+                    <ion-icon name="cube-outline"></ion-icon>
+                    Products
+                </a>
+                <a href="admin-orders.html" class="nav-item active">
+                    <ion-icon name="clipboard-outline"></ion-icon>
+                    Orders
+                    <ion-icon name="chevron-forward-outline" class="ml-auto"></ion-icon>
+                </a>
+                <a href="admin-rentals.html" class="nav-item">
+                    <ion-icon name="home-outline"></ion-icon>
+                    Rentals
+                </a>
+                <a href="admin-maintenance.html" class="nav-item">
+                    <ion-icon name="construct-outline"></ion-icon>
+                    Maintenance
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="index.html" class="back-link">
+                    <ion-icon name="arrow-back-outline"></ion-icon>
+                    Back to Store
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="admin-main">
+            <!-- Mobile admin bar -->
+            <div class="mobile-admin-bar">
+                <div class="mobile-nav">
+                    <a href="admin.html" class="mobile-nav-item">
+                        <ion-icon name="grid-outline"></ion-icon>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="admin-products.html" class="mobile-nav-item">
+                        <ion-icon name="cube-outline"></ion-icon>
+                        <span>Products</span>
+                    </a>
+                    <a href="admin-orders.html" class="mobile-nav-item active">
+                        <ion-icon name="clipboard-outline"></ion-icon>
+                        <span>Orders</span>
+                    </a>
+                    <a href="admin-rentals.html" class="mobile-nav-item">
+                        <ion-icon name="home-outline"></ion-icon>
+                        <span>Rentals</span>
+                    </a>
+                    <a href="admin-maintenance.html" class="mobile-nav-item">
+                        <ion-icon name="construct-outline"></ion-icon>
+                        <span>Maintenance</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Orders Content -->
+            <main class="admin-content">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+                    <div>
+                        <h1 style="margin-bottom: 4px;">Orders</h1>
+                        <p style="color: var(--text-muted); font-size: 14px;" id="orderCountText">Loading orders...</p>
+                    </div>
+                    
+                    <div style="width: 180px;">
+                        <select id="statusFilter" class="form-control" style="padding: 8px 12px; height: auto;">
+                            <option value="all">All statuses</option>
+                            <option value="pending">Pending</option>
+                            <option value="active">Active</option>
+                            <option value="delivered">Delivered</option>
+                            <option value="completed">Completed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="mainContentArea">
+                    <!-- Skeleton loader -->
+                    <div id="skeletonLoader" style="display: flex; flex-direction: column; gap: 12px;">
+                        <div class="skeleton" style="height: 80px; width: 100%; border-radius: 12px;"></div>
+                        <div class="skeleton" style="height: 80px; width: 100%; border-radius: 12px;"></div>
+                        <div class="skeleton" style="height: 80px; width: 100%; border-radius: 12px;"></div>
+                    </div>
+
+                    <!-- Empty state -->
+                    <div id="emptyState" style="text-align: center; padding: 80px 0; display: none;">
+                        <ion-icon name="cube-outline" style="font-size: 48px; color: var(--border-light); margin-bottom: 12px;"></ion-icon>
+                        <p style="color: var(--text-muted);">No orders found</p>
+                    </div>
+
+                    <!-- Table -->
+                    <div id="ordersTable" class="glass" style="display: none; overflow: hidden;">
+                        <div style="overflow-x: auto;">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Order</th>
+                                        <th class="hidden-sm">Customer</th>
+                                        <th class="hidden-md">Delivery</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                        <th style="text-align: right;">Update</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ordersTableBody">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toastNotification" class="toast">
+        <ion-icon name="checkmark-circle" id="toastIcon"></ion-icon>
+        <span id="toastMessage">Order updated</span>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/admin-orders.js"></script>
+</body>
+</html>

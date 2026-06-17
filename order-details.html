@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details - RentEase</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        .animate-fadeSlide {
+            animation: fadeUp 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+        }
+        .back-link {
+            transition: transform 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 14px;
+            text-decoration: none;
+            margin-bottom: 24px;
+        }
+        .back-link:hover {
+            transform: translateX(-4px);
+            color: var(--text-main);
+        }
+        .detail-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header glass">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">R</div>
+                <span>RentEase</span>
+            </a>
+            
+            <nav class="nav-links">
+                <a href="index.html">Browse</a>
+                <a href="dashboard.html" class="active">Dashboard</a>
+                <a href="support.html">Support</a>
+            </nav>
+            
+            <div class="nav-actions">
+                <a href="cart.html" class="icon-btn">
+                    <ion-icon name="cart-outline"></ion-icon>
+                    <span class="badge" id="cartBadge" style="display:none;">0</span>
+                </a>
+                <a href="admin.html" class="icon-btn">
+                    <ion-icon name="person-outline"></ion-icon>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="page-container" style="max-width: 800px; margin: 40px auto; padding: 0 24px;">
+        <a href="dashboard.html" class="back-link">
+            <ion-icon name="arrow-back-outline"></ion-icon>
+            Back to Dashboard
+        </a>
+
+        <div id="orderDetailContent">
+            <div id="skeletonLoader" style="display: flex; flex-direction: column; gap: 20px;">
+                <div class="skeleton" style="height: 200px; border-radius: 12px;"></div>
+                <div class="skeleton" style="height: 150px; border-radius: 12px;"></div>
+                <div class="skeleton" style="height: 120px; border-radius: 12px;"></div>
+            </div>
+
+            <div id="notFoundState" style="text-align: center; padding: 64px 0; display: none;">
+                <div style="width: 64px; height: 64px; background: var(--bg-card); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+                    <ion-icon name="search-outline" style="font-size: 32px; color: var(--border-light);"></ion-icon>
+                </div>
+                <p style="font-size: 18px; font-weight: 500; margin-bottom: 8px;">Order not found</p>
+                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 24px;">The order you're looking for doesn't exist or has been removed</p>
+                <a href="dashboard.html" class="btn">Back to Dashboard</a>
+            </div>
+
+            <div id="orderDetail" class="animate-fadeSlide" style="display: none;">
+                <!-- Header Card -->
+                <div class="detail-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                        <h1 style="font-size: 20px; font-weight: 700; color: var(--text-main);" id="orderIdHeader">Order #</h1>
+                        <span id="orderStatusBadge" class="badge" style="text-transform: capitalize;"></span>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 24px;">
+                        <div style="display: flex; gap: 8px;">
+                            <ion-icon name="person-outline" style="color: var(--text-muted); font-size: 16px; margin-top: 2px;"></ion-icon>
+                            <div>
+                                <p style="font-size: 12px; color: var(--text-muted);">Customer</p>
+                                <p style="font-weight: 500; font-size: 14px;" id="customerName">-</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <ion-icon name="mail-outline" style="color: var(--text-muted); font-size: 16px; margin-top: 2px;"></ion-icon>
+                            <div>
+                                <p style="font-size: 12px; color: var(--text-muted);">Email</p>
+                                <p style="font-weight: 500; font-size: 14px; word-break: break-all;" id="customerEmail">-</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <ion-icon name="call-outline" style="color: var(--text-muted); font-size: 16px; margin-top: 2px;"></ion-icon>
+                            <div>
+                                <p style="font-size: 12px; color: var(--text-muted);">Phone</p>
+                                <p style="font-weight: 500; font-size: 14px;" id="customerPhone">-</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 8px;">
+                            <ion-icon name="calendar-outline" style="color: var(--text-muted); font-size: 16px; margin-top: 2px;"></ion-icon>
+                            <div>
+                                <p style="font-size: 12px; color: var(--text-muted);">Delivery Date</p>
+                                <p style="font-weight: 500; font-size: 14px;" id="deliveryDate">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 8px; padding-top: 16px; border-top: 1px solid var(--border-light);">
+                        <ion-icon name="location-outline" style="color: var(--text-muted); font-size: 16px; margin-top: 2px;"></ion-icon>
+                        <div>
+                            <p style="font-size: 12px; color: var(--text-muted);">Delivery Address</p>
+                            <p style="font-weight: 500; font-size: 14px;" id="deliveryAddress">-</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Items Card -->
+                <div class="detail-card">
+                    <h2 style="font-size: 16px; font-weight: 600; margin-bottom: 16px;">Rented Items <span id="itemsCount" style="color: var(--text-muted); font-weight: 400;"></span></h2>
+                    <div id="itemsList" style="display: flex; flex-direction: column; gap: 12px;">
+                        <!-- Items injected here -->
+                    </div>
+                </div>
+
+                <!-- Payment Summary Card -->
+                <div class="detail-card">
+                    <h2 style="font-size: 16px; font-weight: 600; margin-bottom: 16px;">Payment Summary</h2>
+                    <div style="display: flex; flex-direction: column; gap: 12px; font-size: 14px;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: var(--text-muted);">Monthly rent</span>
+                            <span style="font-weight: 500;" id="totalMonthly">₹0/mo</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: var(--text-muted);">Security deposit</span>
+                            <span style="font-weight: 500;" id="totalDeposit">₹0</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--border-light); font-weight: 600; font-size: 16px;">
+                            <span>First month total</span>
+                            <span id="firstMonthTotal">₹0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/data.js"></script>
+    <script src="js/order-details.js"></script>
+</body>
+</html>

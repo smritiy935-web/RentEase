@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Rentals - RentEase</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        .rental-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 16px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+        .rental-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        .past-rental {
+            opacity: 0.75;
+        }
+        .past-rental:hover {
+            opacity: 0.85;
+        }
+        .animate-fadeSlide {
+            animation: fadeUp 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+        }
+        .maintenance-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 500;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            color: var(--text-main);
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            margin-top: 12px;
+        }
+        .maintenance-btn:hover {
+            background: rgba(249, 115, 22, 0.05);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header glass">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">R</div>
+                <span>RentEase</span>
+            </a>
+            
+            <nav class="nav-links">
+                <a href="products.html">Browse</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="rentals.html" class="active">My Rentals</a>
+                <a href="support.html">Support</a>
+            </nav>
+            
+            <div class="nav-actions">
+                <a href="cart.html" class="icon-btn">
+                    <ion-icon name="cart-outline"></ion-icon>
+                    <span class="badge" id="cartBadge" style="display:none;">0</span>
+                </a>
+                <a href="admin.html" class="icon-btn">
+                    <ion-icon name="person-outline"></ion-icon>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="page-container" style="max-width: 800px; margin: 40px auto; padding: 0 24px;">
+        <h1 style="font-size: 24px; font-weight: 700; color: var(--text-main); margin-bottom: 32px;">My Rentals</h1>
+
+        <div id="rentalsContent">
+            <div id="skeletonLoader" style="display: flex; flex-direction: column; gap: 12px;">
+                <div class="skeleton" style="height: 100px; border-radius: 12px;"></div>
+                <div class="skeleton" style="height: 100px; border-radius: 12px;"></div>
+                <div class="skeleton" style="height: 100px; border-radius: 12px;"></div>
+            </div>
+
+            <div id="emptyState" style="text-align: center; padding: 64px 0; display: none;">
+                <div style="width: 64px; height: 64px; background: var(--bg-card); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+                    <ion-icon name="home-outline" style="font-size: 32px; color: var(--border-light);"></ion-icon>
+                </div>
+                <p style="font-size: 18px; font-weight: 500; margin-bottom: 8px;">No active rentals</p>
+                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 24px;">Your rented items will appear here after delivery</p>
+                <a href="products.html" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 8px;">
+                    Browse Products <ion-icon name="arrow-forward-outline"></ion-icon>
+                </a>
+            </div>
+
+            <div id="rentalsList" style="display: none; flex-direction: column; gap: 32px;">
+                
+                <div id="activeSection" style="display: none;">
+                    <h2 id="activeTitle" style="font-size: 16px; font-weight: 600; color: var(--text-main); margin-bottom: 12px;">Active Rentals (0)</h2>
+                    <div id="activeRentalsList"></div>
+                </div>
+
+                <div id="pastSection" style="display: none;">
+                    <h2 id="pastTitle" style="font-size: 16px; font-weight: 600; color: var(--text-muted); margin-bottom: 12px;">Past Rentals (0)</h2>
+                    <div id="pastRentalsList"></div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="js/data.js"></script>
+    <script src="js/rentals.js"></script>
+</body>
+</html>

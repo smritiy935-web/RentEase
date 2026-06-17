@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail - RentEase</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        @keyframes slideInLeft { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(16px); } to { opacity: 1; transform: translateX(0); } }
+        .animate-left { animation: slideInLeft 0.4s cubic-bezier(0.2,0.9,0.4,1.1) forwards; opacity: 0; }
+        .animate-right { animation: slideInRight 0.4s cubic-bezier(0.2,0.9,0.4,1.1) forwards; opacity: 0; }
+        
+        .back-link {
+            transition: transform 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 14px;
+            text-decoration: none;
+            margin-bottom: 24px;
+        }
+        .back-link:hover {
+            transform: translateX(-4px);
+            color: var(--text-main);
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header glass">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">R</div>
+                <span>RentEase</span>
+            </a>
+            
+            <nav class="nav-links">
+                <a href="index.html" class="active">Browse</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="support.html">Support</a>
+            </nav>
+            
+            <div class="nav-actions">
+                <a href="cart.html" class="icon-btn">
+                    <ion-icon name="cart-outline"></ion-icon>
+                    <span class="badge" id="cartBadge" style="display:none;">0</span>
+                </a>
+                <a href="admin.html" class="icon-btn">
+                    <ion-icon name="person-outline"></ion-icon>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="page-container" style="max-width: 1000px; margin: 40px auto; padding: 0 24px;">
+        <a href="index.html" class="back-link">
+            <ion-icon name="arrow-back-outline"></ion-icon>
+            Back to Products
+        </a>
+
+        <div id="productDetailContent">
+            <div id="skeletonLoader" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div class="skeleton" style="aspect-ratio: 4/3; border-radius: 12px;"></div>
+                <div style="display: flex; flex-direction: column; gap: 16px;">
+                    <div class="skeleton" style="height: 32px; width: 75%; border-radius: 8px;"></div>
+                    <div class="skeleton" style="height: 16px; width: 100%; border-radius: 8px;"></div>
+                    <div class="skeleton" style="height: 16px; width: 100%; border-radius: 8px;"></div>
+                    <div class="skeleton" style="height: 48px; width: 100%; border-radius: 8px; margin-top: 32px;"></div>
+                </div>
+            </div>
+
+            <div id="notFoundState" style="text-align: center; padding: 64px 0; display: none;">
+                <div style="width: 64px; height: 64px; background: var(--bg-card); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+                    <ion-icon name="search-outline" style="font-size: 32px; color: var(--border-light);"></ion-icon>
+                </div>
+                <p style="font-size: 18px; font-weight: 500; margin-bottom: 8px;">Product not found</p>
+                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 24px;">The product you're looking for doesn't exist</p>
+                <a href="index.html" class="btn">Back to Products</a>
+            </div>
+
+            <div id="productDetail" style="display: none; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
+                
+                <!-- Left: Image -->
+                <div class="animate-left">
+                    <div id="productImageContainer" style="aspect-ratio: 4/3; background: #f1f5f9; border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                        <!-- Image injected here -->
+                    </div>
+                </div>
+
+                <!-- Right: Details -->
+                <div class="animate-right" style="display: flex; flex-direction: column;">
+                    <span id="productCategoryBadge" style="display: inline-block; padding: 4px 10px; font-size: 11px; font-weight: 600; border-radius: 20px; border: 1px solid rgba(249, 115, 22, 0.3); color: var(--primary); background: rgba(249, 115, 22, 0.05); width: fit-content; margin-bottom: 8px; text-transform: capitalize;"></span>
+                    
+                    <h1 id="productName" style="font-size: 24px; font-weight: 700; color: var(--text-main); margin-bottom: 12px;"></h1>
+                    <p id="productDescription" style="color: var(--text-muted); font-size: 15px; line-height: 1.6; margin-bottom: 24px;"></p>
+
+                    <div style="display: flex; gap: 16px; padding: 16px; background: #f8fafc; border-radius: 12px; margin-bottom: 24px;">
+                        <div>
+                            <p style="font-size: 12px; color: var(--text-muted);">Monthly Rent</p>
+                            <p id="monthlyRent" style="font-size: 24px; font-weight: 700; color: var(--text-main);">₹0</p>
+                        </div>
+                        <div style="width: 1px; background: var(--border-light);"></div>
+                        <div>
+                            <p style="font-size: 12px; color: var(--text-muted);">Security Deposit</p>
+                            <p id="securityDeposit" style="font-size: 24px; font-weight: 700; color: var(--text-main);">₹0</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 24px;">
+                        <p style="font-size: 14px; font-weight: 600; color: var(--text-main); margin-bottom: 8px;">Rental Tenure</p>
+                        <div id="tenureOptions" style="display: flex; gap: 8px; flex-wrap: wrap;"></div>
+                    </div>
+
+                    <div style="margin-bottom: 24px;">
+                        <p style="font-size: 14px; font-weight: 600; color: var(--text-main); margin-bottom: 8px;">Quantity</p>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <button id="qtyDecrease" class="qty-btn" style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border-light); background: white; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                                <ion-icon name="remove-outline"></ion-icon>
+                            </button>
+                            <span id="quantityValue" style="width: 32px; text-align: center; font-weight: 500;">1</span>
+                            <button id="qtyIncrease" class="qty-btn" style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border-light); background: white; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                                <ion-icon name="add-outline"></ion-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div style="padding: 12px; background: #f8fafc; border-radius: 8px; font-size: 14px; margin-bottom: 24px;">
+                        <div style="display: flex; justify-content: space-between; color: var(--text-muted); margin-bottom: 4px;">
+                            <span id="summaryLabel">Monthly total (1 item)</span>
+                            <span id="summaryTotal" style="font-weight: 500; color: var(--text-main);">₹0/mo</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
+                            <span>Refundable deposit</span>
+                            <span id="summaryDeposit" style="font-weight: 500; color: var(--text-main);">₹0</span>
+                        </div>
+                    </div>
+
+                    <button id="addToCartBtn" class="btn btn-primary" style="width: 100%; padding: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 16px;">
+                        <ion-icon name="cart-outline"></ion-icon>
+                        <span id="addToCartText">Add to Cart</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast -->
+    <div id="toastNotification" class="toast">
+        <ion-icon name="checkmark-circle" id="toastIcon"></ion-icon>
+        <span id="toastMessage">Added to cart</span>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/product-details.js"></script>
+</body>
+</html>
